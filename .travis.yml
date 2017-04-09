@@ -13,7 +13,11 @@ env:
     - secure: "RDhUsl/rFjv1u1X6WrQcX84hubiUUoQf80C+9v0WZZ0na1Fbnc9vEF4b0VBezonjjQDoA+DtLlmYMNfDsvisREWuCQNEyr2CivwuHqCfzoYziZGabrd88qPd4N1Fa2iFZbqq3UWzLDv3q266bYaTte/r1qzwzSiCYMV/4EnKawqYRS0GDjmL74dTrlHdASQhJP0i//vkYVgUh3JpePqP1JIxfkt6oivAGvRj4DifZLeeyHhogSdNEpEC2w6SneBbh3UBsOotx49Vu/NOlAWMu1d1bj49ksjKZ9PYybzeiGZdXehVcQNK97dh0Jl1my1IoouxlkEQMRisuZhmVZTDfxts5aNp1xdZLtFZNVCE9YNcRzVYkZIzEyBnVeEvVm6/ki26cW0ET9XR7LOP7eKP/OoLYhuDU1j7Qgi0i4fxP/O1dDZuC1PhMK1O8CcII9nniIkVdXQ/plxHz4VrGErLQmXb9IyncnaCjau+07B5jFPRYYsBMVhE8cD6Ioy6qMHR/zkJveBJd2QLzi1PEhhf/D/yM/rgeimoSBZeqa/OYDs6HWHiwdj2obZbMqHfQqxzBzYafHd01WGytuBxBDzTAkna3OVj3t+FlLi94ijwWYZtMcKJyMm4uLFseiCvqFsZsYw6QMoTegXgu9VsU/HS9LTGK4acInuPaEIR3xYW168="
 
 install: mvn install -P !build-extras -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-script: mvn test -P !build-extras -B
+
+script:
+  - mvn test -P !build-extras -B
+  - chmod +x codesigning/before-deploy.sh
+  - chmod +x codesigning/deploy.sh
 
 cache:
   directories:
