@@ -1,2 +1,2 @@
 # Sikulix2tigervnc
-special setup of OpenCV to be used in SikuliX2
+special setup of TigerVNC to be used in SikuliX2
