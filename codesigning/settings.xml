@@ -6,7 +6,7 @@
     <server>
       <id>sikulix.deploy.snapshot</id>
       <username>${env.OSSRH_USER}</username>
-      <password>${env.OSSRH_PASS</password>
+      <password>${env.OSSRH_PASS}</password>
     </server>
   </servers>
   <profiles>
@@ -17,7 +17,7 @@
       </activation>
       <properties>
         <gpg.executable>gpg</gpg.executable>
-        <!--<gpg.keyname>${env.GPG_KEY_NAME}</gpg.keyname>-->
+        <gpg.keyname>${env.GPG_KEY_NAME}</gpg.keyname>
         <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
       </properties>
     </profile>
