@@ -15,7 +15,6 @@ before_script:
  - gpg --fast-import codesigning/codesigning.asc
 
 script: 
- - mvn test -P !build-extras -B
  - if [ $TRAVIS_TEST_RESULT -eq 0 ]; then
       mvn deploy -P sign,build-extras --settings codesigning/mvnsettings.xml;
    fi
