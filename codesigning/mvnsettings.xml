@@ -11,7 +11,7 @@
   </servers>
   <profiles>
     <profile>
-      <id>sikulix.deploy.gpg</id>
+      <id>gpg</id>
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
