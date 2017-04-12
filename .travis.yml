@@ -10,6 +10,7 @@ env:
 
 install: mvn install -P !build-extras -B -V
 
+# not sure why it fails
 before_script:
  - openssl aes-256-cbc -K $encrypted_ea1244aca28a_key -iv $encrypted_ea1244aca28a_iv -in codesigning/codesigning.asc.enc -out codesigning/codesigning.asc -d
  - gpg --fast-import codesigning/codesigning.asc
