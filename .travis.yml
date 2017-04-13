@@ -7,7 +7,7 @@ before_script:
 script:
 - mvn test -B
 - if [ $TRAVIS_TEST_RESULT -eq 0 ]; then
-  gpg --fast-import codesigning/codesigning.asc
+  gpg --fast-import codesigning/codesigning.asc;
   mvn deploy -P sign,build-extras --settings codesigning/mvnsettings.xml;
   fi
 env:
