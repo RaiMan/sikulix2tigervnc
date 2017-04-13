@@ -7,8 +7,11 @@ before_script:
 - gpg --fast-import codesigning/codesigning.asc
 script:
 - mvn test -B
-- if [ $TRAVIS_TEST_RESULT -eq 0 ]; then mvn deploy -B -P sign,build-extras --settings
-  codesigning/mvnsettings.xml; fi
+- if [ $TRAVIS_TEST_RESULT -eq 0 ]; then
+    gpg -K;
+    env;
+    mvn deploy -B -P sign,build-extras --settings codesigning/mvnsettings.xml;
+  fi
 env:
   global:
   - secure: pu58bzdFMIt/gRdGf2Mu/ZvKkdIwsxsCNACv6PVDiXChEnFSvmAN2ffyQpVRis7LuWXX6CtOdyKAWQVGqiVVW6I8DxJYbPfSOSag7U9OA99aygkbODUU6sl2WGaIFTFE9yTx9GFkNd8v6mDtGkpMwrO5CPTbkVAvzhCS65jTYjcX4ZdmU3WMPfNMgwfzU3+z9LaZQv8SSYXXGRJOedVmuxLvnGAe9KN6LcFXxYSwUqH2z+HEEDjlzDlVh9qN5D7K2Ah6H3QXO5nM2PTJl6WDtFSkCU5DO0nwNrXJTG0VMUQJ29LswfX7ZckSnHzZ44xo0/hAr5fmotvhlhSArAUkYLPgr0Qg9bDbJ6CxFuSARXXIPAk4C8I+FmMAiCZVZ9rpAqxeWTXMREnGp8CuxHiL3Xe7gxV67XIImLA8GVcZB+mOR3MlNR59uHKbjpCLnkZFGOl7wQ1vqSTNExXP74osHouwY8SUO7hnfzzo203Z/AlM+uimXepo05vlbc/ugNSxNXeJRx9gKe9fAjlaq7jwcscvGAfuF4aC11Sj7yEfm5dSEFJyLxnDTdKullFKcNCySomGOm8RasHKMx/M4wDvAh/Epv9sdRWLNubHc7Y2YZonSkNTfSUc4ZxV5rS89nTerPfizZLzJW6qke4gvJbBwaYdMFPFTCN2EE6Bm9nGkTE=
