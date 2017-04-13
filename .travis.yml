@@ -4,11 +4,12 @@ install: mvn install -B -V
 before_script:
 - openssl aes-256-cbc -K $encrypted_ea1244aca28a_key -iv $encrypted_ea1244aca28a_iv
   -in codesigning/codesigning.asc.enc -out codesigning/codesigning.asc -d
-- gpg --fast-import codesigning/codesigning.asc
 script:
 - mvn test -B
-- if [ $TRAVIS_TEST_RESULT -eq 0 ]; then mvn deploy -P sign,build-extras --settings
-  codesigning/mvnsettings.xml; fi
+- if [ $TRAVIS_TEST_RESULT -eq 0 ]; then
+  gpg --fast-import codesigning/codesigning.asc
+  mvn deploy -P sign,build-extras --settings codesigning/mvnsettings.xml;
+  fi
 env:
   global:
   - secure: hCgi5GdAju7QpFySPEQMiM44tiH+V7UlcKpjY8Pf8GHd/moeDNqcuMQ8n2KHlh7RyW3QkG6fmqlOiDFgLhSqK0Gq3qxU0u7tU8RFv3FMvKjBgiG5A4NYJfMhNJ1CbvfUDKNTwtgJhFqyrvLs6juFCYGLLPD8Q/5W8Mq1Ni8Hcuut/QA6Y6a3pledwecEUmmZlVa2hNAAGwUC4Bfi6B3sMOFAMEYC2H3AJrDAk0L9ET5m2pdRHksQZ5dweoyOmjcIYXGReGds9PEQLF75lNO0AsD6ssMgvxYuRPkx2LvSdHHmDNvfuRJ6VkU1RuXrI+BzcCM2ntwC+JnlWQ4wUNRyeieFpAF/ZznAz6D4nI9t/Mj0zoTrGSvC/LCYOe+jfJ2pxUup5RdA74dAIraz+oIoBs3Q0nT306IiwPeMWyI601AK0qMrrdOb22wfb1ItqzEwy4YfMrZ5NBoBXv7E/Cvyxo8/c2vyLeBxhzcbB72lxm6xtfJGprux2SUQKSoqm0qfEF5eE4NJ8kWQkd2mc+yG/0HbB55hLAPLY4wg4UC7Q9FzFlMZMVPfKzMAZA4Xx4Yck/rabBM5tM1BabPv/w3qR37nOtUIUPvDTV7qKFaxR2Ul78OxZ5aCDXgRVanHxzSrVJ1FQtmx9KVhtSVZyYJ3harYJF3CYGk6yHLRhVEvLsA=
