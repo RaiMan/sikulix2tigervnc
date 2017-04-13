@@ -10,7 +10,7 @@ script:
 - mvn test -B
 - if [ $TRAVIS_TEST_RESULT -eq 0 ]; then
     cp codesigning/mvnsettings.xml ~/.m2/settings.xml;
-    mvn deploy -B -P sign,build-extras;
+    mvn deploy -X -B -P sign,build-extras;
   fi
 #mvn deploy -B -P sign,build-extras --settings codesigning/mvnsettings.xml;
 
