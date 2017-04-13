@@ -1,6 +1,6 @@
 language: java
 jdk: oraclejdk8
-install: mvn install -B -V
+install: mvn install -B
 before_script:
 - openssl aes-256-cbc -K $encrypted_ea1244aca28a_key -iv $encrypted_ea1244aca28a_iv
   -in codesigning/codesigning.asc.enc -out codesigning/codesigning.asc -d
@@ -8,7 +8,7 @@ script:
 - mvn test -B
 - if [ $TRAVIS_TEST_RESULT -eq 0 ]; then
   gpg --fast-import codesigning/codesigning.asc;
-  mvn deploy -P sign,build-extras --settings codesigning/mvnsettings.xml;
+  mvn deploy -B -e -P sign,build-extras --settings codesigning/mvnsettings.xml;
   fi
 env:
   global:
