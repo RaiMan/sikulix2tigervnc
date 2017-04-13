@@ -8,8 +8,6 @@ before_script:
 script:
 - mvn test -B
 - if [ $TRAVIS_TEST_RESULT -eq 0 ]; then
-    gpg -K;
-    env;
     mvn deploy -B -P sign,build-extras --settings codesigning/mvnsettings.xml;
   fi
 env:
