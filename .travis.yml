@@ -9,7 +9,7 @@ before_script:
 script:
 - mvn test -B
 - if [ $TRAVIS_TEST_RESULT -eq 0 ]; then
-  mvn deploy -B -P sign,build-extras --settings codesigning/mvnsettings.xml;
+  mvn deploy -X -B -P sign,build-extras --settings codesigning/mvnsettings.xml;
   fi
 env:
   global:
