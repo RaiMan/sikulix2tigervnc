@@ -9,9 +9,9 @@ before_script:
 script:
 - mvn test -B
 - if [ $TRAVIS_TEST_RESULT -eq 0 ]; then
-  cp codesigning/mvnsettings.xml ~/.m2/settings.xml;
-  #mvn deploy -B -P sign,build-extras --settings codesigning/mvnsettings.xml;
-  mvn deploy -B -P sign,build-extras;
+    cp codesigning/mvnsettings.xml ~/.m2/settings.xml;
+    #mvn deploy -B -P sign,build-extras --settings codesigning/mvnsettings.xml;
+    mvn deploy -B -P sign,build-extras;
   fi
 env:
   global:
