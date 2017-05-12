@@ -35,7 +35,7 @@ public class VNCClient extends CConnection implements FdInStreamBlockCallback, C
   private int currentEncoding;
   private VNCFrameBuffer frameBuffer;
 
-  public static VNCClient connect(String address, int port, String password, boolean shareConnection) throws IOException {
+  public static VNCClient connect(String address, int port, String password, boolean shareConnection) {
     VNCClient client = new VNCClient(address, port, password, shareConnection);
     while (client.state() != VNCClient.RFBSTATE_NORMAL) {
       client.processMsg();
@@ -43,7 +43,7 @@ public class VNCClient extends CConnection implements FdInStreamBlockCallback, C
     return client;
   }
 
-  private VNCClient(String address, int port, final String password, boolean shareConnection) throws IOException {
+  private VNCClient(String address, int port, final String password, boolean shareConnection) {
     this.security = new ThreadLocalSecurityClient(new BasicUserPasswdGetter(password));
 
     this.currentEncoding = Encodings.encodingTight;
@@ -103,7 +103,6 @@ public class VNCClient extends CConnection implements FdInStreamBlockCallback, C
    * @param w           Width of desired region
    * @param h           Height of desired region
    * @param incremental Zero sends entire desktop, One sends changes only.
-   * @throws IOException If there is a socket error
    */
   public void refreshFramebuffer(int x, int y, int w, int h, boolean incremental) {
     writer().writeFramebufferUpdateRequest(new Rect(x, y, w, h), incremental);
@@ -167,9 +166,8 @@ public class VNCClient extends CConnection implements FdInStreamBlockCallback, C
   /**
    * Closes the connection
    *
-   * @throws IOException
    */
-  public void close() throws IOException {
+  public void close() {
     this.shuttingDown = true;
 
     if (this.sock != null) {
