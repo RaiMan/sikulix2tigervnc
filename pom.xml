@@ -54,6 +54,16 @@
     </repository>
   </distributionManagement>
 
+  <dependencies>
+    <dependency>
+      <groupId>com.sikulix</groupId>
+      <artifactId>tigervnc</artifactId>
+      <version>2.0.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/src/main/resources/tigervnc.jar</systemPath>
+    </dependency>
+  </dependencies>
+
   <profiles>
     <profile>
       <id>sign</id>
@@ -112,6 +122,14 @@
   </profiles>
 
   <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <excludes>
+          <exclude>tigervnc.jar</exclude>
+        </excludes>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
