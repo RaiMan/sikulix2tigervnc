@@ -5,12 +5,12 @@ package com.sikulix.vnc;
 
 import com.tigervnc.rfb.PixelBuffer;
 import com.tigervnc.rfb.PixelFormat;
+import com.tigervnc.rfb.Rect;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBuffer;
-import java.awt.image.SampleModel;
-import java.awt.image.WritableRaster;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.*;
 import java.nio.ByteOrder;
 
 /**
@@ -20,6 +20,8 @@ class VNCFrameBuffer extends PixelBuffer {
   private final Object imageLock = new Object();
   private BufferedImage image;
   private DataBuffer db;
+  private PixelFormat pixelFormat = null;
+  private ColorModel colorModel = null;
 
   public DataBuffer getDB() {
     return db;
@@ -28,10 +30,12 @@ class VNCFrameBuffer extends PixelBuffer {
   public VNCFrameBuffer(int width, int height, PixelFormat serverPF) {
     PixelFormat nativePF = this.getNativePF();
     if (nativePF.depth > serverPF.depth) {
-      this.setPF(serverPF);
+      pixelFormat = serverPF;
     } else {
-      this.setPF(nativePF);
+      pixelFormat = nativePF;
     }
+    this.setPF(pixelFormat);
+    colorModel = this.cm;
     this.resize(width, height);
   }
 
@@ -58,15 +62,11 @@ class VNCFrameBuffer extends PixelBuffer {
     );
   }
 
-  public void setColourMapEntries(int offset, int nbColors, int[] rgb) {
-    throw new RuntimeException("Not supported yet");
-  }
-
   private void createImage(int width, int height) {
     synchronized (imageLock) {
       if (width != 0 && height != 0) {
-        WritableRaster raster = this.cm.createCompatibleWritableRaster(width, height);
-        this.image = new BufferedImage(this.cm, raster, false, null);
+        WritableRaster raster = colorModel.createCompatibleWritableRaster(width, height);
+        this.image = new BufferedImage(colorModel, raster, false, null);
         this.db = raster.getDataBuffer();
       }
     }
@@ -81,7 +81,8 @@ class VNCFrameBuffer extends PixelBuffer {
           g2d.fillRect(x, y, w, h);
           break;
         default:
-          g2d.setColor(new Color(0xff000000 | this.cm.getRed(pixelValue) << 16 | this.cm.getGreen(pixelValue) << 8 | this.cm.getBlue(pixelValue)));
+          g2d.setColor(new Color(0xff000000 | colorModel.getRed(pixelValue) << 16 |
+                  colorModel.getGreen(pixelValue) << 8 | colorModel.getBlue(pixelValue)));
           g2d.fillRect(x, y, w, h);
       }
 
