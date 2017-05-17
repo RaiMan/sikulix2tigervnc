@@ -167,7 +167,7 @@ public class VNCClient extends CConnection implements FdInStreamBlockCallback, C
    * @param key X Window System Keysym for key.
    * @throws IOException If there is a socket error.
    */
-  protected void keyDown(int key) throws IOException {
+  public void keyDown(int key) throws IOException {
     writer().writeKeyEvent(key, true);
   }
 
@@ -177,7 +177,7 @@ public class VNCClient extends CConnection implements FdInStreamBlockCallback, C
    * @param key X Window System Keysym for key.
    * @throws IOException If there is a socket error.
    */
-  protected void keyUp(int key) throws IOException {
+  public void keyUp(int key) throws IOException {
     writer().writeKeyEvent(key, false);
   }
 
@@ -191,7 +191,7 @@ public class VNCClient extends CConnection implements FdInStreamBlockCallback, C
    * @param y           Y coordinate of action
    * @throws IOException If there is a socket error.
    */
-  protected void mouseEvent(int buttonState, int x, int y) throws IOException {
+  public void mouseEvent(int buttonState, int x, int y) throws IOException {
     writer().writePointerEvent(new Point(x, y), buttonState);
   }
 

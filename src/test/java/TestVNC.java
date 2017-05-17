@@ -7,6 +7,7 @@ import com.sikulix.devices.IDevice;
 
 import org.junit.*;
 
+@Ignore
 public class TestVNC {
 
   @BeforeClass
