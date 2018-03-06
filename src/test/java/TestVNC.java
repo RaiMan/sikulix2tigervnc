@@ -1,11 +1,8 @@
-import com.sikulix.api.Element;
-import com.sikulix.api.Picture;
-import com.sikulix.core.SX;
-import com.sikulix.devices.vnc.VNCDevice;
 import com.sikulix.vnc.VNCClient;
-import com.sikulix.devices.IDevice;
-
 import org.junit.*;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 @Ignore
 public class TestVNC {
@@ -46,24 +43,47 @@ public class TestVNC {
     return travis == null ? true : !"true".equals(travis);
   }
 
-  private static String ip = "192.168.2.63";
+  private static String ip = "192.168.2.112";
   private static int port = 5900;
   private static String password = "vnc";
+  private static int max = 5;
+  private volatile boolean closed;
 
   @Test
   public void test_000_basic() {
     if (shouldRun()) {
       VNCClient.onDebugging();
-      IDevice vnc = new VNCDevice();
-      vnc.start("192.168.2.63", 5900, "vnc");
-      Element area = new Element(100, 100, 300, 300);
-      Picture picture;
-      for (int n = 0; n < 1; n++) {
-        picture = vnc.capture();
-        picture.show(2);
+      VNCClient client = VNCClient.connect(ip, port, null, true);
+      Rectangle bounds = client.getBounds();
+      int w = (int) bounds.getWidth();
+      int h = (int) bounds.getWidth();
+      p("bounds: %s", bounds);
+      BufferedImage image = null;
+      //M[16,109 406x143]
+      int x = 1159;
+      int y = 773;
+      w = 406;
+      h = 143;
+      new Thread(new Runnable() {
+        @Override
+        public void run() {
+          try {
+            client.processMessages();
+          } catch (RuntimeException e) {
+            if (!closed) {
+              throw e;
+            }
+          }
+        }
+      }).start();
+      client.refreshFramebuffer();
+      for (int n = 0; n < max; n++) {
+        image = client.getFrameBuffer(x, y, w, h);
+        p("%d: %s", n, image);
+        pause(1);
       }
-      SX.pause(1);
-      vnc.stop();
+      closed = true;
+      client.close();
     }
   }
 }

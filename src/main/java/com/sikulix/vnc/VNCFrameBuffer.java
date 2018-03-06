@@ -131,7 +131,7 @@ class VNCFrameBuffer extends PixelBuffer {
     synchronized (imageLock) {
       i = new BufferedImage(image.getColorModel(), image.getColorModel().createCompatibleWritableRaster(w, h), false, null);
       Graphics2D g2d = i.createGraphics();
-      g2d.drawImage(image, 0, 0, w, h, x, y, w, h, null);
+      g2d.drawImage(image, 0, 0, w, h, x, y, x + w, y + h, null);
       g2d.dispose();
     }
     return i;
