@@ -1,4 +1,4 @@
-# Sikulix2tigervnc 1.1.4
+# Sikulix2tigervnc 2.0.5
 
 special setup of TigerVNC to be used in SikuliX
 
@@ -22,4 +22,4 @@ this VNC feature or your works based on this whole package,
  
 The maven central coordinates:
 
-``(group)com.sikulix (artefact)sikulix2tigervnc (version)1.1.4``
+``(group)com.sikulix (artefact)sikulix2tigervnc (version)2.0.5``
